@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .tracker {
+      background: #161616;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 60px repeat(5, 1fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .header {
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .day {
+      font-weight: bold;
+      text-align: center;
+    }
+
+    input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      accent-color: #4ade80;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tracker">
+    <h2>Weekly Day Tracker</h2>
+
+    <div class="grid" id="grid">
+      <div></div>
+      <div class="header">1</div>
+      <div class="header">2</div>
+      <div class="header">3</div>
+      <div class="header">4</div>
+      <div class="header">5</div>
+    </div>
+  </div>
+
+  <script>
+    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const grid = document.getElementById("grid");
+
+    days.forEach((day, row) => {
+      const dayLabel = document.createElement("div");
+      dayLabel.className = "day";
+      dayLabel.textContent = day;
+      grid.appendChild(dayLabel);
+
+      for (let col = 0; col < 5; col++) {
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+
+        const key = `day-${row}-${col}`;
+        checkbox.checked = localStorage.getItem(key) === "true";
+
+        checkbox.addEventListener("change", () => {
+          localStorage.setItem(key, checkbox.checked);
+        });
+
+        grid.appendChild(checkbox);
+      }
+    });
+  </script>
+
+</body>
+</html>
